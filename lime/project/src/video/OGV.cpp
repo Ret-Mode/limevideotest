@@ -296,6 +296,11 @@ namespace lime {
 	void OGV::cleanVideo(){
 
 		ogg_stream_destroy(oggstream);
+
+/** should free these, and close file**/
+//		for(int i = 0; i < streams.size();i++){
+//			free(streams[i]);
+//		}
 //		fclose(videoFile);
 		th_info_clear(&tinfo);
 		th_comment_clear(&tcomment);
