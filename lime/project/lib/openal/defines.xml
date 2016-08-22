@@ -1,0 +1,6 @@
+<xml>
+
+    <compilerflag value="-DNATIVE_TOOLKIT_OPENAL"/>
+    <compilerflag value="-DAL_LIBTYPE_STATIC=1" if="native_toolkit_openal_static" />
+
+</xml>

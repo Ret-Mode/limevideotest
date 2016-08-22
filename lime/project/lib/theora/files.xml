@@ -1,0 +1,84 @@
+<xml>
+	
+	<files id="native-toolkit-theora" >
+		
+		<compilerflag value="-I${NATIVE_TOOLKIT_PATH}/theora/include/"/>
+		<compilerflag value="-I${NATIVE_TOOLKIT_PATH}/theora/"/>
+		<compilerflag value="-I${NATIVE_TOOLKIT_PATH}/theora/lib/"/>
+		<compilerflag value="-I${NATIVE_TOOLKIT_PATH}/ogg/include/"/>
+
+
+		<section if="windows" unless="mingw">
+			<compilerflag value="/arch:SSE"/>
+			<compilerflag value="/DOC_X86_ASM"/>
+			<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/x86_vc/mmxencfrag.c"/>
+			<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/x86_vc/mmxfdct.c"/>
+			<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/x86_vc/mmxfrag.c"/>
+			<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/x86_vc/mmxidct.c"/>
+			<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/x86_vc/mmxstate.c"/>
+			<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/x86_vc/x86state.c"/>
+		</section>
+		
+		<section unless="windows">
+			<compilerflag value="-Wall"/>
+			<compilerflag value="-mmmx" unless="android || iphone"/>
+			<compilerflag value="-msse" unless="android || iphone"/>
+			<compilerflag value="-msse2" unless="android || iphone"/>
+			<compilerflag value="-Wall"/>
+			<compilerflag value="-Wno-parentheses"/>
+			<compilerflag value="-DOC_X86_ASM" unless="android || iphone"/>
+			<compilerflag value="-mtune=native" unless="android"/>
+			<compilerflag value="-O3"/>
+			<compilerflag value="-fomit-frame-pointer"/>
+			<compilerflag value="-fforce-addr" unless="mac || iphone"/>
+			<compilerflag value="-finline-functions"/>
+			<compilerflag value="-I${NATIVE_TOOLKIT_PATH}/theora/lib/x86"/>
+			<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/x86/mmxfdct.c"/>
+			<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/x86/mmxfrag.c"/>
+			<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/x86/mmxidct.c"/>
+			<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/x86/mmxstate.c"/>
+			<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/x86/sse2fdct.c"/>
+			<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/x86/x86state.c"/>
+		</section>
+		 
+		
+		<section if="mingw">
+			<compilerflag value="-Wall"/>
+			<compilerflag value="-mmmx"/>
+			<compilerflag value="-msse"/>
+			<compilerflag value="-msse2"/>
+			<compilerflag value="-Wall"/>
+			<compilerflag value="-Wno-parentheses"/>
+			<compilerflag value="-DOC_X86_ASM"/>
+			<compilerflag value="-mtune=native"/>
+			<compilerflag value="-O3"/>
+			<compilerflag value="-fomit-frame-pointer"/>
+			<compilerflag value="-fforce-addr"/>
+			<compilerflag value="-finline-functions"/>
+			<compilerflag value="-I${NATIVE_TOOLKIT_PATH}/theora/lib/x86"/>
+			<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/x86/mmxfdct.c"/>
+			<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/x86/mmxfrag.c"/>
+			<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/x86/mmxidct.c"/>
+			<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/x86/mmxstate.c"/>
+			<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/x86/sse2fdct.c"/>
+			<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/x86/x86state.c"/>
+		</section> 
+		
+		<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/apiwrapper.c"/>
+		<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/bitpack.c"/>
+		<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/decapiwrapper.c"/>
+		<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/decinfo.c"/>
+		<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/decode.c"/>
+		<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/dequant.c"/>
+		<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/fragment.c"/>
+		<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/huffdec.c"/>
+		<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/idct.c"/>
+		<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/info.c"/>
+		<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/internal.c"/>
+		<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/quant.c"/>
+		<file name="${NATIVE_TOOLKIT_PATH}/theora/lib/state.c"/>
+
+		
+	</files>
+	
+</xml>

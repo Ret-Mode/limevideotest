@@ -1,0 +1,81 @@
+<xml>
+
+    <files id="native-toolkit-openal">
+
+        <compilerflag value="-I${NATIVE_TOOLKIT_PATH}/openal/include/"/>
+        <compilerflag value="-I${NATIVE_TOOLKIT_PATH}/openal/OpenAL32/include/"/>
+        <compilerflag value="-DAL_LIBTYPE_STATIC" if="native_toolkit_openal_static" />
+
+	<compilerflag value="-msse" if="mingw"/>
+	<compilerflag value="-msse2" if="mingw"/>
+	<compilerflag value="-msse3" if="mingw"/>
+	<compilerflag value="-mmmx" if="mingw"/>
+	<compilerflag value="-Dpthread_key_create=pthread_key_create_func" if="mingw"/>
+	<compilerflag value="-Dpthread_key_delete=pthread_key_delete_func" if="mingw"/>
+	<compilerflag value="-Dpthread_getspecific=pthread_getspecific_func" if="mingw"/>
+	<compilerflag value="-Dpthread_setspecific=pthread_setspecific_func" if="mingw"/>
+	<compilerflag value="-Dpthread_once=pthread_once_func" if="mingw"/>
+
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/OpenAL32/alAuxEffectSlot.c"/>
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/OpenAL32/alBuffer.c"/>
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/OpenAL32/alEffect.c"/>
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/OpenAL32/alError.c"/>
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/OpenAL32/alExtension.c"/>
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/OpenAL32/alFilter.c"/>
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/OpenAL32/alListener.c"/>
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/OpenAL32/alSource.c"/>
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/OpenAL32/alState.c"/>
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/OpenAL32/alThunk.c"/>
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/Alc/ALc.c"/>
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/Alc/ALu.c"/>
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/Alc/alcConfig.c"/>
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/Alc/alcDedicated.c"/>
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/Alc/alcEcho.c"/>
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/Alc/alcModulator.c"/>
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/Alc/alcReverb.c"/>
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/Alc/alcRing.c"/>
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/Alc/alcThread.c"/>
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/Alc/bs2b.c"/>
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/Alc/helpers.c"/>
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/Alc/panning.c"/>
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/Alc/hrtf.c"/>
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/Alc/mixer.c"/>
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/Alc/mixer_c.c"/>
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/Alc/mixer_sse.c" unless="rpi"/>
+	<file name="${NATIVE_TOOLKIT_PATH}/openal/Alc/mixer_neon.c" if="rpi"/>
+
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/Alc/backends/loopback.c"/>
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/Alc/backends/wave.c" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/Alc/backends/null.c"/>
+
+        <section if="linux">
+
+            <compilerflag value="-DLIBTYPE=STATIC" />
+            <compilerflag value="-DREQUIRE_PULSEAUDIO=ON" />
+            <compilerflag value="-DREQUIRE_ALSA=ON" />
+            <compilerflag value="-msse" unless="rpi" />
+            <compilerflag value="-mfpu=neon" if="rpi" />
+
+            <file name="${NATIVE_TOOLKIT_PATH}/openal/Alc/backends/pulseaudio.c" />
+            <file name="${NATIVE_TOOLKIT_PATH}/openal/Alc/backends/alsa.c" />
+            <file name="${NATIVE_TOOLKIT_PATH}/openal/Alc/backends/oss.c" />
+
+        </section>
+
+        <section if="mac">
+
+            <file name="${NATIVE_TOOLKIT_PATH}/openal/Alc/backends/coreaudio.c" />
+
+        </section>
+
+        <section if="windows">
+
+            <file name="${NATIVE_TOOLKIT_PATH}/openal/Alc/backends/winmm.c" />
+            <file name="${NATIVE_TOOLKIT_PATH}/openal/Alc/backends/dsound.c" />
+            <file name="${NATIVE_TOOLKIT_PATH}/openal/Alc/backends/mmdevapi.c" />
+
+        </section>
+
+    </files>
+
+</xml>

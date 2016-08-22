@@ -1,0 +1,23 @@
+<xml>
+	
+	<files id="native-toolkit-nfd">
+		
+		<compilerflag value="-I${NATIVE_TOOLKIT_PATH}/nfd/src/include/" />
+		<compilerflag value="-D_CRT_SECURE_NO_WARNINGS" if="windows" />
+		
+		<!--MINGW support-->
+		<compilerflag value="-DWINVER=0x0502" if="mingw"/>
+		<compilerflag value="-D_WIN32_WINNT=0x0502" if="mingw"/>
+		<compilerflag value="-D_WIN32_WINDOWS=0x0500" if="mingw"/>
+		<compilerflag value="-DNTDDI_VERSION=0x06000000" if="mingw"/>
+		<compilerflag value="-D_WIN32_IE=0x0700" if="mingw"/>
+		<!--end MINGW support-->
+		
+		<file name="${NATIVE_TOOLKIT_PATH}/nfd/src/nfd_common.c" />
+		<file name="${NATIVE_TOOLKIT_PATH}/nfd/src/nfd_win.cpp" if="windows" />
+		<file name="${NATIVE_TOOLKIT_PATH}/nfd/src/nfd_cocoa.m" if="mac" />
+		<file name="${NATIVE_TOOLKIT_PATH}/nfd/src/nfd_gtk.c" if="linux" />
+		
+	</files>
+	
+</xml>

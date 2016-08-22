@@ -1,0 +1,6 @@
+<xml>
+
+    <compilerflag value="-DNATIVE_TOOLKIT_CURL"/>
+    <compilerflag value="-DNATIVE_TOOLKIT_CURL_SSL" if="NATIVE_TOOLKIT_CURL_SSL"/>
+
+</xml>

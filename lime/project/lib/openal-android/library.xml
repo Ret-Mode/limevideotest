@@ -1,0 +1,45 @@
+<xml>
+
+    <include name="${HXCPP}/build-tool/BuildCommon.xml"/>
+    <set name="native_toolkit_openal_static" value="1" if="static_link" />
+
+    <error unless="android" value="openal-android requires the -Dandroid define to build"/>
+
+        <!-- when building from native-toolkit path, it should be relative to allow for the lib name -->
+    <set name="NATIVE_TOOLKIT_PATH" value=".." />
+    <set name="OUT_DIR" value="lib" />
+
+        <!-- lib values -->
+    <set name="LIBNAME" value="openal" />
+    <set name="SLIBEXT" value=".a"/>
+    <set name="SHLIBEXT" value=".so"/>
+
+        <!-- :todo: will use a define to control -debug appendage -->
+    <set name="DEBUGEXTRA" value="" />
+    <set name="DEBUGEXTRA" value="" if="native_toolkit_openal_static"/>
+
+        <!-- include the files and defines for the lib -->
+    <include name="${NATIVE_TOOLKIT_PATH}/openal-android/files.xml" />
+    <include name="${NATIVE_TOOLKIT_PATH}/openal-android/defines.xml" />
+
+        <!-- and finally the targets -->
+    <target id="native-toolkit-openal-android" output="${LIBPREFIX}${LIBNAME}${DEBUGEXTRA}${LIBEXTRA}" tool="linker" toolid="${STD_MODULE_LINK}">
+
+            <!-- make sure it lands in lib/Windows or lib/Mac64 etc -->
+        <outdir name="${OUT_DIR}/${BINDIR}" />
+        <ext value="${SHLIBEXT}" unless="native_toolkit_openal_static"/>
+        <ext value="${SLIBEXT}" if="native_toolkit_openal_static"/>
+
+            <!-- add the files to build for the target -->
+        <files id="native-toolkit-openal-android"/>
+
+            <!-- linker flags -->
+        <lib name="-lOpenSLES" unless="native_toolkit_openal_static"/>
+
+    </target>
+
+    <target id="default">
+        <target id="native-toolkit-openal-android"/>
+    </target>
+
+</xml>

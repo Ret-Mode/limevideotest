@@ -1,0 +1,9 @@
+<xml>
+
+    <compilerflag value="-DNATIVE_TOOLKIT_LZMA"/>
+    <!-- :todo: investigate why it's flagged as single threaded on non-windows -->
+    <compilerflag value="-D_7ZIP_ST" unless="windows"/>
+        <!-- a race condition on windows with too many threads causes the compiling to fail, occasionally. This resolves that for this library, only on windows. -->
+    <set name="HXCPP_COMPILE_THREADS" value="1" if="windows"/>
+
+</xml>
