@@ -1,5 +1,8 @@
 #ifndef OGV_H
 #define OGV_H
+
+#include "VideoBuffer.h"
+
 #include <system/System.h>
 #include <vector>
 
@@ -17,19 +20,19 @@
 
 namespace lime {
 
-	class OGV
+	class OGV : public VideoBuffer
 	{
 		public:
 			OGV();/**/
 			~OGV();/**/
 
-			int test_theora(FILE_HANDLE * file, int scale, int delay);/**/
-			void playVideo();/**/
-			int processVideo();/**/
+			int testVideo(const char * const file, int scale, int delay);/**/
+			void playVideo(double timestamp);/**/
+			int processVideo(double timestamp);/**/
 			void cleanVideo();/**/
 			void stopVideo();
 			void getMovieDimensions(unsigned int *w, unsigned int *h);
-			void getYUV(unsigned char **y, unsigned char **u, unsigned char **v, int *ystride, int *ustride, int *vstride);
+			void getYUV(int *scale, unsigned char **y, unsigned char **u, unsigned char **v, int *ystride, int *ustride, int *vstride);
 		private:
 			std::vector<ogg_stream_state*> streams;
 			void fMemSet(void *addr, int size);/**/
@@ -54,12 +57,12 @@ namespace lime {
 			int videopassed;
 			int eovf;
 			int readedFromState;
-			float msperframe;
+			double msperframe;
 			int pplevelcurrent;
 			int pplevelmax;
 			int prevtime;
 			int nexttime;
-			int deltatime;
+			double deltatime;
 			int presentVideoPacket;
 			int framecontrol;
 			int framedelay;

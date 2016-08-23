@@ -710,7 +710,7 @@ class Stage extends DisplayObjectContainer implements IModule {
 				default:
 					
 			}
-			trace("Rendering!");
+			
 			__renderer.render (this);
 			
 		}

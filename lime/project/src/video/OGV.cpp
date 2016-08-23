@@ -25,7 +25,8 @@ namespace lime {
 		memset(addr,0,size);
 	}
 
-	void OGV::getYUV(unsigned char **y, unsigned char **u, unsigned char **v, int *ystride, int *ustride, int *vstride){
+	void OGV::getYUV(int *scale, unsigned char **y, unsigned char **u, unsigned char **v, int *ystride, int *ustride, int *vstride){
+		*scale = videoScale;
 		*y = ybr[0].data;
 		*ystride = ybr[0].stride;
 		*u = ybr[1].data;
@@ -75,7 +76,7 @@ namespace lime {
 		do{/*while(ogg_sync_wrote(state,size)!=0 && retval);*/
 			do{/*while(size<OGGBUFFSIZE && size>0 && retval);*/
 
-				size=fread(buffer+dbuff,1,OGGBUFFSIZE-dbuff,fp);
+				size=lime::fread(buffer+dbuff,1,OGGBUFFSIZE-dbuff,fp);
 				dbuff+=size;
 				if(size==0){
 
@@ -123,7 +124,7 @@ namespace lime {
 			th_decode_ctl(decinstance,TH_DECCTL_GET_PPLEVEL_MAX,&pplevelmax,sizeof(pplevelmax));
 			pplevelcurrent = 0;
 			th_decode_ctl(decinstance,TH_DECCTL_SET_PPLEVEL,&pplevelcurrent,sizeof(pplevelcurrent));
-			msperframe = 1000.f / (tinfo.fps_numerator * 1.0 / tinfo.fps_denominator);
+			msperframe = 1000.0 / (tinfo.fps_numerator * 1.0 / tinfo.fps_denominator);
 			
 			th_decode_packetin(decinstance,&oggpacket, &granpos);
 		}
@@ -260,8 +261,11 @@ namespace lime {
 		return gotTheora;
 	}
 
-	int OGV::test_theora(FILE_HANDLE * file, int scale, int delay){
-		videoFile = file;
+	int OGV::testVideo(const char * const file, int scale, int delay){
+		videoFile = lime::fopen (file, "rb");
+		if(!videoFile || !videoFile->isFile()){
+			return 0;
+		}
 		videoScale = scale;
 		framedelay = delay;
 		if(videoFile){
@@ -282,9 +286,32 @@ namespace lime {
 	}
 
 
-	int OGV::processVideo(){
+	int OGV::processVideo(double timestamp){
+		double dt = timestamp - deltatime;
+#warning "Poor timer -> should be something better"
+		if(dt<msperframe/2.0){
+			printf("pp:%d msf:%lf tstamp:%lf dt%lf dtcalc:%lf inc\n",pplevelcurrent,msperframe,timestamp,deltatime,dt);
+			if(pplevelcurrent<pplevelmax){
+				increasePPlevel();
+			}
+			return eovf;
+		} else if (dt > msperframe *1.5){
+			printf("pp:%d msf:%lf tstamp:%lf dt%lf dtcalc:%lf  reduce\n",pplevelcurrent,msperframe,timestamp,deltatime,dt);
+			if(pplevelcurrent>0){
+				reducePPlevel();
+			}
+			while(dt > msperframe *2.0){
+				printf("pp:%d msf:%lf tstamp:%lf dt%lf dtcalc:%lf reduce more\n",pplevelcurrent,msperframe,timestamp,deltatime,dt);
+
+				drawFrame();
+				deltatime+=msperframe;
+				dt = timestamp - deltatime;
+			}
+		}
+		printf("pp:%d msf:%lf tstamp:%lf dt%lf dtcalc:%lf render\n",pplevelcurrent,msperframe,timestamp,deltatime,dt);
 
 		drawFrame();
+		deltatime+=msperframe;
 		return eovf;
 		
 	}
@@ -297,11 +324,10 @@ namespace lime {
 
 		ogg_stream_destroy(oggstream);
 
-/** should free these, and close file**/
-//		for(int i = 0; i < streams.size();i++){
-//			free(streams[i]);
-//		}
-//		fclose(videoFile);
+		for(int i = 0; i < streams.size();i++){
+			free(streams[i]);
+		}
+		lime::fclose(videoFile);
 		th_info_clear(&tinfo);
 		th_comment_clear(&tcomment);
 		th_decode_free(decinstance);
@@ -313,9 +339,13 @@ namespace lime {
 
 	}
 
-	void OGV::playVideo(){
-		deltatime = 0;
+	void OGV::playVideo(double timestamp){
+		prevtime = timestamp;
 		//SDL_Delay(msperframe);
+	}
+	
+	VideoBuffer* CreateVideoBuffer (){
+		return new OGV();
 	}
 
 }

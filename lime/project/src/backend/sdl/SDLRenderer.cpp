@@ -122,17 +122,64 @@ namespace lime {
 		
 	}
 
-	void SDLRenderer::UpdateMovieTexture(unsigned char* y, int ystride, unsigned char *cb, int cbstride, unsigned char *cr, int crstride){
+	void SDLRenderer::UpdateMovieTexture(int scale, unsigned char* y, int ystride, unsigned char *cb, int cbstride, unsigned char *cr, int crstride){
 	
 		SDL_RendererInfo info;
 		
 		SDL_GetRendererInfo(sdlRenderer, &info);
 	
 		if(sdlMovie){
+			int movieHeight;
+			int movieWidth;
+			int width;
+			int height;
+			
+#warning "We should do something with that code, keep widths and heights somewhere"
+#warning "Calling this every frame isnt smartest approach I guess"
+			
+			SDL_GetWindowSize (sdlWindow, &width, &height);
+			SDL_QueryTexture(sdlMovie,NULL,NULL,&movieWidth, &movieHeight);
+			SDL_Rect scalerect;
+			SDL_Rect *rect = &scalerect;
+			float wscale;
+			float hscale;
+			switch(scale){
+				case(0):
+					
+						scalerect.x = width/2 - movieWidth/2;
+						scalerect.y = height/2 - movieHeight/2;
+						scalerect.w = movieWidth;
+						scalerect.h = movieHeight;
+					
+				break;
+
+				case(1):
+				
+						wscale = movieWidth * 1.f / width;
+						hscale = movieHeight * 1.f / height;
+						if(wscale > hscale){
+							scalerect.x = 0;
+							scalerect.w = width;
+							scalerect.y = (height - movieHeight/wscale)/2;
+							scalerect.h = movieHeight/wscale;
+						} else {
+							scalerect.y = 0;
+							scalerect.h = height;
+							scalerect.x = (width - movieWidth / hscale)/2;
+							scalerect.w = movieWidth / hscale;
+						}
+				
+				break;
+
+				case(2): default:
+					rect = NULL;
+				break;
+
+			}
 			
 			SDL_UpdateYUVTexture(sdlMovie,NULL, y,ystride,cb,cbstride,cr,crstride);
 			
-			SDL_RenderCopy(sdlRenderer, sdlMovie , NULL, NULL);
+			SDL_RenderCopy(sdlRenderer, sdlMovie , NULL, rect);
 			
 		}
 		

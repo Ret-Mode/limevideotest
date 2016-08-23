@@ -43,7 +43,7 @@
 #include <ui/Window.h>
 #include <ui/WindowEvent.h>
 #include <utils/LZMA.h>
-#include <video/OGV.h>
+#include <video/VideoBuffer.h>
 #include <vm/NekoVM.h>
 
 DEFINE_KIND (k_finalizer);
@@ -1330,42 +1330,34 @@ namespace lime {
 	}
 	
 	
-	value lime_video_load (HxString path, value rend,int scale, int dt) {
+	value lime_video_load (HxString path, value rend, int dt, int scale) {
 		
 		Renderer* renderer = (Renderer*)val_data (rend);
-		OGV *ogv;
+		VideoBuffer *ogv;
 		
-		if(renderer != NULL){
+		if(renderer){
 			
-			ogv = new OGV();
+#warning "We decoupled Video buffer by method in OGV.cpp -> CreateVideoBuffer"
+#warning "Similar to SDLRenderer"
+			ogv = CreateVideoBuffer();
 			
 				if (ogv) {
-					char *fpath = strdup(path.__s);
 					
-					FILE_HANDLE *file = lime::fopen (fpath, "rb");
-					if( file && file->isFile()){
-						
-					
-					if(ogv->test_theora(file, scale, dt)){
+					if(ogv->testVideo(path.__s, scale, dt)){
 						
 						unsigned int w;
 						unsigned int h;
 						ogv->getMovieDimensions(&w, &h);
 						renderer->CreateMovieTexture(w, h);
-						ogv->playVideo();
-						free(fpath);
-						
+						ogv->playVideo(System::GetTimer());
 						return alloc_abstract(k_video,ogv);
 						
 					}
-					free(fpath);
 					
+					delete ogv;
 					
-					
-				}
+				
 			}
-			
-			delete ogv;
 			
 		}
 		
@@ -1375,11 +1367,11 @@ namespace lime {
 	
 	bool lime_video_load_frame (value file,value rend) {
 		
-		OGV *ogv = (OGV *) val_data(file);
+		VideoBuffer *ogv = (VideoBuffer *) val_data(file);
 		Renderer *r = (Renderer*)val_data (rend);
 		if(ogv){
 
-			if(!ogv->processVideo()){
+			if(!ogv->processVideo(System::GetTimer ())){
 				r->DestroyMovieTexture();
 				ogv->cleanVideo();
 				delete ogv;
@@ -1389,14 +1381,15 @@ namespace lime {
 				
 				return false;
 			}
+			int scale;
 			unsigned char *y;
 			unsigned char *u;
 			unsigned char *v;
 			int ystride;
 			int ustride;
 			int vstride;
-			ogv->getYUV(&y, &u, &v, &ystride, &ustride, &vstride);
-			r->UpdateMovieTexture(y, ystride,u,ustride,v, vstride);
+			ogv->getYUV(&scale,&y, &u, &v, &ystride, &ustride, &vstride);
+			r->UpdateMovieTexture(scale,y, ystride,u,ustride,v, vstride);
 			return true;
 		}
 		

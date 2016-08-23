@@ -33,7 +33,7 @@ namespace lime {
 			virtual void Unlock ();
 			
 			virtual void CreateMovieTexture(unsigned int w, unsigned int h);
-			virtual void UpdateMovieTexture(unsigned char* y, int ystride, unsigned char *cb, int cbstride, unsigned char *cr, int crstride);
+			virtual void UpdateMovieTexture(int scale, unsigned char* y, int ystride, unsigned char *cb, int cbstride, unsigned char *cr, int crstride);
 			virtual void DestroyMovieTexture();
 			
 			SDL_Renderer* sdlRenderer;

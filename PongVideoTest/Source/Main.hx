@@ -43,7 +43,7 @@ class Main extends Sprite {
 		}
 		inited = true;
 		
-		video = new VideoFile("assets/tmp.ogg",0,VideoFile.SCALE_NORMAL);
+		video = new VideoFile("assets/tmp.ogg",0,VideoFile.SCALE_FIT);
 		
 		arrowUp = false;
 		arrowDown = false;
