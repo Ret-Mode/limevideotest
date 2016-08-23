@@ -25,7 +25,7 @@ namespace lime {
 			virtual const char* Type () = 0;
 			virtual void Unlock () = 0;
 			virtual void CreateMovieTexture(unsigned int w, unsigned int h)=0;
-			virtual void UpdateMovieTexture(unsigned char* y, int ystride, unsigned char *cb, int cbstride, unsigned char *cr, int crstride)=0;
+			virtual void UpdateMovieTexture(int scale, unsigned char* y, int ystride, unsigned char *cb, int cbstride, unsigned char *cr, int crstride)=0;
 			virtual void DestroyMovieTexture()=0;
 			Window* currentWindow;
 		
