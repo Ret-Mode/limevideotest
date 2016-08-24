@@ -61,7 +61,7 @@ class WindowsPlatform extends PlatformTarget {
            		
 			if(str == "64" || str == "m64"){
 				
-				is64bit = true;           			}
+				is64bit = true;
         			
         		}
 		}
