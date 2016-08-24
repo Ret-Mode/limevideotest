@@ -230,15 +230,43 @@ class FileHelper {
 	public static function copyLibrary (project:HXProject, ndll:NDLL, directoryName:String, namePrefix:String, nameSuffix:String, targetDirectory:String, allowDebug:Bool = false, targetSuffix:String = null) {
 		
 		if(project.host == Platform.WINDOWS){
+     		
+     			var is64bit:Bool = false;
      			
      			for(str in project.targetFlags.keys()){
            		
-				if(str == "64"){
+				if(str == "64" || str == "-64"){
 				
-					directoryName += "64";
+					is64bit = true;
            			
            			}
         			
+        		}
+        		
+     			for(str in project.haxedefs.keys()){
+           		
+				if(str == "HXCPP_M64"){
+				
+					is64bit = true;
+           			
+           			}
+        			
+        		}
+
+     			for(str in project.defines.keys()){
+           		
+				if(str == "HXCPP_M64"){
+				
+					is64bit = true;
+           			
+           			}
+        			
+        		}
+
+        		if(is64bit){
+        		
+        			directoryName += "64";
+        		
         		}
 		
 		}
