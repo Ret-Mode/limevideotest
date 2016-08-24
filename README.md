@@ -6,6 +6,16 @@ Setup:
   git clone https://github.com/RetardMode/limevideotest yourfolder
 
   cd yourfolder
+  
+  cd lime
+  
+  cd tools
+  
+  haxe tools.hxml
+  
+  cd ..
+  
+  cd ..
 
   haxelib dev lime lime
 
