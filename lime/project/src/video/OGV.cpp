@@ -275,7 +275,7 @@ namespace lime {
 				return 1;
 			} else {
 				ogg_sync_clear(&oggstate);
-				fclose(videoFile);
+				lime::fclose(videoFile);
 				th_info_clear(&tinfo);
 				th_comment_clear(&tcomment);
 				return 0;
@@ -323,10 +323,10 @@ namespace lime {
 	void OGV::cleanVideo(){
 
 		ogg_stream_destroy(oggstream);
-
-		for(int i = 0; i < streams.size();i++){
+		//ogg_stream_destry frees memory autamtically*/
+		/*for(int i = 0; i < streams.size();i++){
 			free(streams[i]);
-		}
+		}*/
 		lime::fclose(videoFile);
 		th_info_clear(&tinfo);
 		th_comment_clear(&tcomment);
