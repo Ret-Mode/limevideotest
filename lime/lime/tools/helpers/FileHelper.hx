@@ -235,7 +235,7 @@ class FileHelper {
      			
      			for(str in project.targetFlags.keys()){
            		
-				if(str == "64" || str == "-64"){
+				if(str == "64" || str == "m64"){
 				
 					is64bit = true;
            			
