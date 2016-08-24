@@ -57,7 +57,7 @@ class WindowsPlatform extends PlatformTarget {
 			
 		}
 
-     		for(str in targetFlags.keys()){
+     		for(str in project.targetFlags.keys()){
            		
 			if(str == "64" || str == "m64"){
 				
@@ -66,7 +66,7 @@ class WindowsPlatform extends PlatformTarget {
         		}
 		}
         		
-     		for(str in haxedefs.keys()){
+     		for(str in project.haxedefs.keys()){
            		
 			if(str == "HXCPP_M64"){
 				
@@ -76,7 +76,7 @@ class WindowsPlatform extends PlatformTarget {
         			
         	}
 
-     		for(str in defines.keys()){
+     		for(str in project.defines.keys()){
            		
 			if(str == "HXCPP_M64"){
 				
