@@ -37,6 +37,7 @@ class WindowsPlatform extends PlatformTarget {
 		
 		super (command, _project, targetFlags);
 		var arch = "/";
+		var is64bit:Bool = false;
 		
 		if (project.targetFlags.exists ("neko")) {
 			
@@ -55,11 +56,40 @@ class WindowsPlatform extends PlatformTarget {
 			targetType = "cpp";
 			
 		}
+
+     		for(str in targetFlags.keys()){
+           		
+			if(str == "64" || str == "m64"){
+				
+				is64bit = true;           			}
+        			
+        		}
+		}
+        		
+     		for(str in haxedefs.keys()){
+           		
+			if(str == "HXCPP_M64"){
+				
+				is64bit = true;
+           			
+           		}
+        			
+        	}
+
+     		for(str in defines.keys()){
+           		
+			if(str == "HXCPP_M64"){
+				
+				is64bit = true;
+           			
+           		}
+        			
+        	}
 		
-		for(str in targetFlags.keys()){
-			if(str == "64"){
-				arch = "64/";
-			}
+		if(is64bit){
+		
+			arch = "64/";
+						
 		}
 		
 		targetDirectory = project.app.path + "/windows" + arch + targetType;
@@ -143,21 +173,21 @@ class WindowsPlatform extends PlatformTarget {
 			
 			var haxeArgs = [ hxml ];
 			var flags = [];
-			var is32 = true;
+			var is64bit = false;
              
 			for(str in targetFlags.keys()){
-				if(str == "64"){
-					is32 = false;
+				if(str == "64" || str== "m64"){
+					is64bit = true;
 				}
 			}
-          
-			if(is32){
+          		//is it needed here?????????
+			if(is64bit){
  			
- 				flags.push ("-DHXCPP_M32");
+ 				flags.push ("-DHXCPP_M64");
 				
 			} else {
 				
-				flags.push ("-DHXCPP_M64");
+				flags.push ("-DHXCPP_M32");
 				
 			}
 			
