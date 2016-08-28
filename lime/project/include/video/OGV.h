@@ -26,7 +26,7 @@ namespace lime {
 			OGV();/**/
 			~OGV();/**/
 
-			int testVideo(const char * const file, int scale, int delay);/**/
+			int testVideo(Resource *resource, int scale, int delay);/**/
 			void playVideo(double timestamp);/**/
 			int processVideo(double timestamp);/**/
 			void cleanVideo();/**/
