@@ -1330,10 +1330,21 @@ namespace lime {
 	}
 	
 	
-	value lime_video_load (HxString path, value rend, int dt, int scale) {
+	value lime_video_load (value path, value rend, int dt, int scale) {
 		
 		Renderer* renderer = (Renderer*)val_data (rend);
 		VideoBuffer *ogv;
+		Resource resource;
+		
+		if(val_is_string(path)){
+			
+			resource = Resource (val_string (path));
+			
+		} else {
+			
+			return alloc_null();
+			
+		}
 		
 		if(renderer){
 			
@@ -1343,7 +1354,7 @@ namespace lime {
 			
 				if (ogv) {
 					
-					if(ogv->testVideo(path.__s, scale, dt)){
+					if(ogv->testVideo(&resource, scale, dt)){
 						
 						unsigned int w;
 						unsigned int h;
