@@ -297,7 +297,9 @@ namespace lime {
 
 	int OGV::processVideo(double timestamp){
 		double dt = timestamp - deltatime;
+#ifdef __GNUC__
 #warning "Poor timer -> should be something better"
+#endif
 		if(dt<msperframe/2.0){
 			printf("pp:%d msf:%lf tstamp:%lf dt%lf dtcalc:%lf inc\n",pplevelcurrent,msperframe,timestamp,deltatime,dt);
 			if(pplevelcurrent<pplevelmax){
