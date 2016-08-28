@@ -133,10 +133,12 @@ namespace lime {
 			int movieWidth;
 			int width;
 			int height;
-			
+
+#ifdef __GNUC__
 #warning "We should do something with that code, keep widths and heights somewhere"
 #warning "Calling this every frame isnt smartest approach I guess"
-			
+#endif
+
 			SDL_GetWindowSize (sdlWindow, &width, &height);
 			SDL_QueryTexture(sdlMovie,NULL,NULL,&movieWidth, &movieHeight);
 			SDL_Rect scalerect;
