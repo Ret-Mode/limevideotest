@@ -1347,9 +1347,12 @@ namespace lime {
 		}
 		
 		if(renderer){
-			
+
+#ifdef __GNUC__			
 #warning "We decoupled Video buffer by method in OGV.cpp -> CreateVideoBuffer"
 #warning "Similar to SDLRenderer"
+#endif
+
 			ogv = CreateVideoBuffer();
 			
 				if (ogv) {
