@@ -38,7 +38,7 @@ class VideoFile {
 	}
 	
 	#if ((cpp || neko || nodejs) && !macro)
-	@:cffi private static function lime_video_load (path:String,renderer:Dynamic,scale:Int,deltaTime:Int):Dynamic;
+	@:cffi private static function lime_video_load (path:Dynamic,renderer:Dynamic,scale:Int,deltaTime:Int):Dynamic;
 	@:cffi private static function lime_video_load_frame (file:Dynamic,rendererBackend:Dynamic):Bool;
 	#end
 
