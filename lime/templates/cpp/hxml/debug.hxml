@@ -3,3 +3,4 @@
 -cp ::BUILD_DIR::/cpp/haxe
 --macro keep("::APP_MAIN::")
 -debug
+-v

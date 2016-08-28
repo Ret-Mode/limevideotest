@@ -3,3 +3,4 @@
 -cpp ::CPP_DIR::
 --macro keep("::APP_MAIN::")
 -D final
+-v
