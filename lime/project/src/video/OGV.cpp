@@ -261,8 +261,17 @@ namespace lime {
 		return gotTheora;
 	}
 
-	int OGV::testVideo(const char * const file, int scale, int delay){
-		videoFile = lime::fopen (file, "rb");
+	int OGV::testVideo(Resource *resource, int scale, int delay){
+		if (resource->path) {
+			
+			videoFile = lime::fopen (resource->path, "rb");
+		
+		} else {
+			
+			return 0;
+			
+		}
+		
 		if(!videoFile || !videoFile->isFile()){
 			return 0;
 		}
