@@ -39,6 +39,7 @@ namespace lime {
 		if(haveTheora){
 			*w = tinfo.frame_width;
 			*h = tinfo.frame_height;
+			LOG_VIDEO("Got video size:%u %u\n",*w,*h);
 		}
 	}
 	
@@ -301,25 +302,25 @@ namespace lime {
 #warning "Poor timer -> should be something better"
 #endif
 		if(dt<msperframe/2.0){
-			printf("pp:%d msf:%lf tstamp:%lf dt%lf dtcalc:%lf inc\n",pplevelcurrent,msperframe,timestamp,deltatime,dt);
+			LOG_VIDEO("pp:%d msf:%f tstamp:%f dt%f dtcalc:%f inc\n",pplevelcurrent,msperframe,timestamp,deltatime,dt);
 			if(pplevelcurrent<pplevelmax){
 				increasePPlevel();
 			}
 			return eovf;
 		} else if (dt > msperframe *1.5){
-			printf("pp:%d msf:%lf tstamp:%lf dt%lf dtcalc:%lf  reduce\n",pplevelcurrent,msperframe,timestamp,deltatime,dt);
+			LOG_VIDEO("pp:%d msf:%f tstamp:%f dt%f dtcalc:%f  reduce\n",pplevelcurrent,msperframe,timestamp,deltatime,dt);
 			if(pplevelcurrent>0){
 				reducePPlevel();
 			}
 			while(dt > msperframe *2.0){
-				printf("pp:%d msf:%lf tstamp:%lf dt%lf dtcalc:%lf reduce more\n",pplevelcurrent,msperframe,timestamp,deltatime,dt);
+				LOG_VIDEO("pp:%d msf:%f tstamp:%f dt%f dtcalc:%f reduce more\n",pplevelcurrent,msperframe,timestamp,deltatime,dt);
 
 				drawFrame();
 				deltatime+=msperframe;
 				dt = timestamp - deltatime;
 			}
 		}
-		printf("pp:%d msf:%lf tstamp:%lf dt%lf dtcalc:%lf render\n",pplevelcurrent,msperframe,timestamp,deltatime,dt);
+		LOG_VIDEO("pp:%d msf:%f tstamp:%f dt%f dtcalc:%f render\n",pplevelcurrent,msperframe,timestamp,deltatime,dt);
 
 		drawFrame();
 		deltatime+=msperframe;
