@@ -36,7 +36,6 @@ class WindowsPlatform extends PlatformTarget {
 	public function new (command:String, _project:HXProject, targetFlags:Map <String, String> ) {
 		
 		super (command, _project, targetFlags);
-		var arch = "/";
 		is64 = false;
 		
 		if (project.targetFlags.exists ("neko")) {
@@ -66,7 +65,7 @@ class WindowsPlatform extends PlatformTarget {
         	}
 		}
 		
-		targetDirectory = project.app.path + "/windows" + (is64 ? "64" : "") + targetType;
+		targetDirectory = project.app.path + "/windows" + (is64 ? "64" : "") + "/" + targetType;
 		applicationDirectory = targetDirectory + "/bin/";
 		executablePath = applicationDirectory + project.app.file + ".exe";
 		
