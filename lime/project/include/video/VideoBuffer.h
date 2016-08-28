@@ -12,7 +12,7 @@
 #else
 #ifdef IPHONE
 //#define LOG_VIDEO(args,...) printf(args, ##__VA_ARGS__)
-#define LOG_SOUND(args...) { }
+#define LOG_VIDEO(args...) { }
 #elif defined(TIZEN)
 #include <FBase.h>
 #define LOG_VIDEO(args,...) AppLog(args, ##__VA_ARGS__)
