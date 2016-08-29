@@ -353,6 +353,7 @@ namespace lime {
 
 	void OGV::playVideo(double timestamp){
 		prevtime = timestamp;
+		deltatime = timestamp;
 		//SDL_Delay(msperframe);
 	}
 	
