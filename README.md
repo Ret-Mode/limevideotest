@@ -3,7 +3,7 @@ video test of lime 2.9.1
 
 Setup:
 ```
-  git clone https://github.com/RetardMode/limevideotest yourfolder
+  git clone https://github.com/Ret-Mode/limevideotest yourfolder
 
   cd yourfolder
 
