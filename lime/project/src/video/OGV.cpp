@@ -1,20 +1,18 @@
-/**
+/*
+         DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+                    Version 2, December 2004
+
 Copyright (c) <2016> <RetardMode from OpenFL.org community>
 
-This software is provided 'as-is', without any express or implied
-warranty. In no event will the authors be held liable for any damages
-arising from the use of this software.
+ Everyone is permitted to copy and distribute verbatim or modified
+ copies of this license document, and changing it is allowed as long
+ as the name is changed.
 
-Permission is granted to anyone to use this software for any purpose,
-including commercial applications, and to alter it and redistribute it
-freely, subject to the following restrictions:
+            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 
-1. The origin of this software must not be misrepresented; you must not
-   claim that you wrote the original software. If you use this software
-   in a product, an acknowledgement in the product documentation is not required.
-2. Altered source versions must not be
-   misrepresented as being the original software.
-3. This notice may be removed or altered from any source distribution.
+  0. You just DO WHAT THE FUCK YOU WANT TO.
+
 */
 
 #include "video/OGV.h"
