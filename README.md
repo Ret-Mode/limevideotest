@@ -42,3 +42,4 @@ there is still music to handle
 if anyone is interested in adding sound -> one way is adding stream playback into Audio buffer.
 OpenAL will allow to count buffers that will be (eventually) overflowed (with info how many times), so it 
 can be used to count audio/video time differences in case of glitches. 
+Android version don't work also (I guess yuv surface blitting does not work with opengles 2:/ ) 
